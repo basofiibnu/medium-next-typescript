@@ -19,7 +19,6 @@ interface IFormInput {
 }
 
 const PostDetail = ({ post }: Props) => {
-  console.log(post);
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
