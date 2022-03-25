@@ -1,7 +1,8 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import PortableText from 'react-portable-text';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../components/headers';
 import { client, urlFor } from '../../lib/client';
 import { Post } from '../../typings';
@@ -10,8 +11,35 @@ interface Props {
   post: Post;
 }
 
+interface IFormInput {
+  _id: string;
+  name: string;
+  email: string;
+  comment: string;
+}
+
 const PostDetail = ({ post }: Props) => {
-  console.log(post);
+  const [submitted, setSubmitted] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    await fetch('/api/createComment', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        console.log(res);
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setSubmitted(false);
+      });
+  };
   return (
     <div>
       <Head>
@@ -25,7 +53,7 @@ const PostDetail = ({ post }: Props) => {
           alt="cover-pic"
           className="h-60 w-full object-cover"
         />
-        <article className="mx-auto max-w-4xl p-5">
+        <article className="mx-auto max-w-4xl px-5">
           <h1 className="mt-6 mb-3 text-3xl">{post.title}</h1>
           <h2 className="mb-2 text-xl font-light text-gray-500">
             {post.description}
@@ -80,6 +108,95 @@ const PostDetail = ({ post }: Props) => {
             />
           </div>
         </article>
+        <div className="mx-auto max-w-4xl">
+          <hr className="my-5 border border-yellow-500" />
+          {submitted ? (
+            <div className="mx-auto my-10 flex max-w-2xl flex-col bg-yellow-500 py-10 text-center text-white">
+              <h3 className="text-3xl font-bold">
+                Thank you for submitting your comment!
+              </h3>
+              <p>Once it has been approved it will appear here</p>
+            </div>
+          ) : (
+            <form
+              className="mx-auto mb-10 flex max-w-2xl flex-col py-3 px-5"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <h3 className="text-sm text-yellow-500">
+                Enjoyed this article?
+              </h3>
+              <h4 className="text-3xl font-bold">
+                Leave a comment below
+              </h4>
+              <hr className="mt-2 py-3" />
+              <input
+                type="hidden"
+                {...register('_id')}
+                name="_id"
+                value={post._id}
+              />
+              <label className="mb-5 block">
+                <span className="text-gray-700">Name</span>
+                <input
+                  {...register('name', {
+                    required: true,
+                  })}
+                  name="name"
+                  className="form-input mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-yellow-300"
+                  type="text"
+                  placeholder="Your name"
+                />
+              </label>
+              <label className="mb-5 block">
+                <span className="text-gray-700">Email</span>
+                <input
+                  {...register('email', {
+                    required: true,
+                  })}
+                  className="form-input mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-yellow-300"
+                  type="email"
+                  placeholder="Your email"
+                />
+              </label>
+              <label className="mb-5 block">
+                <span className="text-gray-700">Comment</span>
+                <textarea
+                  {...register('comment', {
+                    required: true,
+                  })}
+                  className="form-textarea mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-yellow-300"
+                  placeholder="Your comment"
+                  rows={8}
+                />
+              </label>
+
+              <div className="flex flex-col p-5">
+                {errors.name && (
+                  <span className="text-red-500">
+                    The name field is required
+                  </span>
+                )}
+                {errors.email && (
+                  <span className="text-red-500">
+                    The email field is required
+                  </span>
+                )}
+                {errors.comment && (
+                  <span className="text-red-500">
+                    The comment field is required
+                  </span>
+                )}
+              </div>
+
+              <div className="w-full">
+                <input
+                  type="submit"
+                  className="focus:shadow-outline w-full cursor-pointer rounded bg-yellow-300 py-2 px-4 font-bold text-white shadow hover:bg-yellow-500 focus:outline-none"
+                />
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );
