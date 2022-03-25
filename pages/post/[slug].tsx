@@ -19,6 +19,7 @@ interface IFormInput {
 }
 
 const PostDetail = ({ post }: Props) => {
+  console.log(post);
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -32,7 +33,6 @@ const PostDetail = ({ post }: Props) => {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        console.log(res);
         setSubmitted(true);
       })
       .catch((error) => {
@@ -108,6 +108,25 @@ const PostDetail = ({ post }: Props) => {
             />
           </div>
         </article>
+
+        {post.comments.length > 0 && (
+          <div className="my-10 mx-auto flex max-w-4xl flex-col space-y-2 p-10 shadow shadow-gray-200">
+            <h3 className="text-2xl text-gray-700">Comments</h3>
+            <hr className="my-2" />
+
+            {post.comments.map((data) => (
+              <div key={data._id}>
+                <p className="flex flex-col border-b-2 py-2">
+                  <span className="font-bold">{data.name} :</span>
+                  <span className="text-gray-700">
+                    {data.comment}
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="mx-auto max-w-4xl">
           <hr className="my-5 border border-yellow-500" />
           {submitted ? (
@@ -231,13 +250,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         _createdAt,
         title,
         author -> {
-        image,
-        name
-      },
-      description,
-      mainImage,
+            image,
+            name
+        },
+        'comments': *[_type == "comment" && post._ref == ^._id && approved == true],
+        description,
+        mainImage,
         slug,
-      body,
+        body,
       }`;
 
   const post = await client.fetch(query, {
