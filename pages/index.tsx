@@ -15,14 +15,14 @@ export default function Home({ posts }: Props) {
   return (
     <div>
       <Head>
-        <title>Medium Demo - Typescript</title>
+        <title>Medium Portfolio - NextJS Typescript</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
       <Main />
       {posts && <Posts posts={posts} />}
-      <div className="mx-auto flex max-w-7xl flex-row items-start gap-14">
+      <div className="mx-auto flex max-w-7xl flex-col items-start gap-0 lg:flex-row lg:gap-14">
         <News />
         <Sidebar />
       </div>

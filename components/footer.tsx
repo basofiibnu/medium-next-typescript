@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className="border-t-[1px] border-gray-200">
       <div className="mx-auto my-5 max-w-7xl">
-        <div className="flex items-center justify-between">
+        <div className="mx-5 flex flex-col items-center justify-between md:flex-row">
           <div className="flex cursor-pointer flex-wrap gap-3 text-sm text-gray-400">
             <p className="hover:text-gray-500">Home</p>
             <p className="hover:text-gray-500">About</p>

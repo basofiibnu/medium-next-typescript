@@ -20,7 +20,7 @@ export default async function handler(
   try {
     const create = await client.create({
       _type: 'comment',
-      post: {
+      posts: {
         _type: 'reference',
         _ref: _id,
       },

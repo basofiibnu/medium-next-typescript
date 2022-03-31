@@ -20,7 +20,7 @@ interface IFormInput {
 
 const PostDetail = ({ post, params }: Props) => {
   const [submitted, setSubmitted] = useState(false);
-  console.log(params);
+  console.log(params, post);
   const {
     register,
     handleSubmit,
@@ -54,8 +54,8 @@ const PostDetail = ({ post, params }: Props) => {
           className="h-60 w-full object-cover"
         />
         <article className="mx-auto max-w-4xl px-5">
-          <h1 className="mt-6 mb-3 text-3xl">{post.title}</h1>
-          <h2 className="mb-2 text-xl font-light text-gray-500">
+          <h1 className="mt-6 mb-2 text-3xl md:mb-3">{post.title}</h1>
+          <h2 className="mb-3 text-xl font-light text-gray-500">
             {post.description}
           </h2>
 
@@ -110,7 +110,7 @@ const PostDetail = ({ post, params }: Props) => {
         </article>
 
         {post.comments.length > 0 && (
-          <div className="my-10 mx-auto flex max-w-4xl flex-col space-y-2 p-10 shadow shadow-gray-200">
+          <div className="my-10 mx-auto flex max-w-4xl flex-col space-y-2 p-5 shadow shadow-gray-200 md:p-10">
             <h3 className="text-2xl text-gray-700">Comments</h3>
             <hr className="my-2" />
 
@@ -128,9 +128,9 @@ const PostDetail = ({ post, params }: Props) => {
         )}
 
         <div className="mx-auto max-w-4xl">
-          <hr className="my-5 border border-yellow-500" />
+          <hr className="my-5 border border-green-600" />
           {submitted ? (
-            <div className="mx-auto my-10 flex max-w-2xl flex-col bg-yellow-500 py-10 text-center text-white">
+            <div className="mx-auto my-10 flex max-w-2xl flex-col bg-green-600 px-5 py-10 text-center text-white md:px-0">
               <h3 className="text-3xl font-bold">
                 Thank you for submitting your comment!
               </h3>
@@ -141,7 +141,7 @@ const PostDetail = ({ post, params }: Props) => {
               className="mx-auto mb-10 flex max-w-2xl flex-col py-3 px-5"
               onSubmit={handleSubmit(onSubmit)}
             >
-              <h3 className="text-sm text-yellow-500">
+              <h3 className="mb-2 text-sm text-yellow-600">
                 Enjoyed this article?
               </h3>
               <h4 className="text-3xl font-bold">
@@ -161,7 +161,7 @@ const PostDetail = ({ post, params }: Props) => {
                     required: true,
                   })}
                   name="name"
-                  className="form-input mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-yellow-300"
+                  className="form-input mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-blue-300"
                   type="text"
                   placeholder="Your name"
                 />
@@ -172,7 +172,7 @@ const PostDetail = ({ post, params }: Props) => {
                   {...register('email', {
                     required: true,
                   })}
-                  className="form-input mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-yellow-300"
+                  className="form-input mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-blue-300"
                   type="email"
                   placeholder="Your email"
                 />
@@ -183,7 +183,7 @@ const PostDetail = ({ post, params }: Props) => {
                   {...register('comment', {
                     required: true,
                   })}
-                  className="form-textarea mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-yellow-300"
+                  className="form-textarea mt-1 block w-full rounded border py-2 px-3 shadow outline-none focus:ring focus:ring-blue-300"
                   placeholder="Your comment"
                   rows={8}
                 />
@@ -210,7 +210,7 @@ const PostDetail = ({ post, params }: Props) => {
               <div className="w-full">
                 <input
                   type="submit"
-                  className="focus:shadow-outline w-full cursor-pointer rounded bg-yellow-300 py-2 px-4 font-bold text-white shadow hover:bg-yellow-500 focus:outline-none"
+                  className="focus:shadow-outline w-full cursor-pointer rounded bg-gray-400 py-2 px-4 font-bold text-white shadow transition-all duration-150 ease-in-out hover:bg-gray-700 focus:outline-none"
                 />
               </div>
             </form>

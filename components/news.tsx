@@ -43,7 +43,7 @@ const News = () => {
             className="text-decoration-none"
           >
             <div className="flex items-center gap-6">
-              <div className="flex basis-3/4 flex-col">
+              <div className="basis-4/4 flex flex-col md:basis-3/4">
                 <div className="mb-2 flex items-center justify-start gap-2">
                   <img
                     src={article.urlToImage}
@@ -53,7 +53,7 @@ const News = () => {
                     {article.author}
                   </p>
                 </div>
-                <div className="mb-1 text-2xl font-bold">
+                <div className="mb-1 text-xl font-bold md:text-2xl">
                   {article.title}
                 </div>
                 <div className="font-sm mb-2 text-gray-400">
@@ -77,7 +77,7 @@ const News = () => {
                   </p>
                 </div>
               </div>
-              <div className="basis-1/4">
+              <div className="hidden basis-1/4 md:block">
                 <img src={article.urlToImage} alt="" />
               </div>
             </div>

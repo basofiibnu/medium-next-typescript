@@ -30,7 +30,7 @@ interface IFormInput {
 }
 
 const DetailUser = ({ post, author, category }: Props) => {
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   const [createArticle, setCreateArticle] = useState(false);
   const [image, setImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -130,7 +130,7 @@ const DetailUser = ({ post, author, category }: Props) => {
           </div>
         </div>
 
-        <div className="mx-auto my-10 min-h-screen max-w-7xl">
+        <div className="mx-auto my-5 min-h-screen max-w-7xl lg:my-10">
           <div className="mb-5 flex flex-row items-center justify-between border-b p-4 text-2xl font-semibold uppercase text-gray-700">
             <p>
               {createArticle ? 'Create New Article' : 'Your Articles'}
