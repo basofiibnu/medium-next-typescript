@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
 import sanityClient from '@sanity/client';
 
 const config = {
@@ -11,10 +9,7 @@ const config = {
 
 const client = sanityClient(config);
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export default async function handler(req, res) {
   const { _id, name, email, comment } = JSON.parse(req.body);
 
   try {

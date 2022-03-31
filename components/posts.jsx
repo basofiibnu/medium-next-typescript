@@ -1,14 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 import { urlFor } from '../lib/client';
-import { Post } from '../typings';
 
-interface Props {
-  posts: [Post];
-  borderBottom?: boolean;
-}
-
-const Posts = ({ posts, borderBottom = true }: Props) => {
+const Posts = ({ posts, borderBottom = true }) => {
   return (
     <div className={`${borderBottom && 'border-b'} border-gray-300`}>
       <div className="mx-auto max-w-7xl">

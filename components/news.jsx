@@ -1,30 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-interface Article {
-  source: {
-    id: string;
-    name: string;
-  };
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
-}
-
-interface Response {
-  status: string;
-  totalResults: number;
-  articles: [Article];
-}
-
 const News = () => {
   const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
   const [articles, setArticles] = useState([]);
 
-  useEffect(async (): any => {
+  useEffect(async () => {
     const baseUrl = `https://newsapi.org/v2/top-headlines?country=id&apiKey=${apiKey}`;
 
     const response = await fetch(baseUrl);
@@ -35,7 +15,7 @@ const News = () => {
 
   return (
     <div className="flex-shrink-0 basis-2/3">
-      {articles.map((article: Article, i) => (
+      {articles.map((article, i) => (
         <div className="my-10 cursor-pointer px-6" key={i}>
           <a
             href={article.url}

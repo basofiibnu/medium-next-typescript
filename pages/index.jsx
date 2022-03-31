@@ -5,13 +5,8 @@ import News from '../components/news';
 import Posts from '../components/posts';
 import Sidebar from '../components/sidebar';
 import { client } from '../lib/client';
-import { Post } from '../typings';
 
-interface Props {
-  posts: [Post];
-}
-
-export default function Home({ posts }: Props) {
+export default function Home({ posts }) {
   return (
     <div>
       <Head>

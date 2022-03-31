@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { client } from '../lib/client';
 
-interface Category {
-  title: string;
-}
-
 const Sidebar = () => {
   const [categories, setCategories] = useState([]);
 
-  useEffect(async (): any => {
+  useEffect(async () => {
     const query = `*[_type == 'category']{
           title
       }`;
@@ -23,7 +19,7 @@ const Sidebar = () => {
           DISCOVER MORE OF WHAT MATTERS TO YOU
         </p>
         <div className="flex flex-wrap gap-2">
-          {categories.map((category: Category, i) => (
+          {categories.map((category, i) => (
             <div
               key={i}
               className="cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-xs text-gray-500 transition-all duration-150 ease-in-out hover:bg-gray-500 hover:text-gray-200"

@@ -1,35 +1,18 @@
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { PuffLoader } from 'react-spinners';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 import Header from '../../components/headers';
-import { client, urlFor } from '../../lib/client';
-import { Post, Author, Category } from '../../typings';
+import { client } from '../../lib/client';
 import Posts from '../../components/posts';
 import { motion, AnimatePresence } from 'framer-motion';
 import Footer from '../../components/footer';
 
-interface Props {
-  post: [Post];
-  author: Author;
-  category: [Category];
-}
-
-interface IFormInput {
-  title: string;
-  _category: string;
-  description: string;
-  content: string;
-  mainImg: string;
-  _author: string;
-}
-
-const DetailUser = ({ post, author, category }: Props) => {
+const DetailUser = ({ post, author, category }) => {
   const [submitted, setSubmitted] = useState(false);
   const [createArticle, setCreateArticle] = useState(false);
   const [image, setImage] = useState(null);
@@ -38,7 +21,7 @@ const DetailUser = ({ post, author, category }: Props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const uploadToClient = (event: any) => {
+  const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
 
@@ -51,9 +34,9 @@ const DetailUser = ({ post, author, category }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm();
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  const onSubmit = async (data) => {
     setLoading(true);
     const body = new FormData();
     body.append('file', image);
@@ -414,7 +397,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   const postQuery = `*[_type == 'posts' && author._ref == $userId]{
     _id,
     _createdAt,

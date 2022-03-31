@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
 import sanityClient from '@sanity/client';
 import path from 'path';
 import fs from 'fs';
@@ -13,10 +11,7 @@ const config = {
 
 const client = sanityClient(config);
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export default async function handler(req, res) {
   const { filename, id } = JSON.parse(req.body);
   const dirRelativeToPublicFolder = 'uploads';
 

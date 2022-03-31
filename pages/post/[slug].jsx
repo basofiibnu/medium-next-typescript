@@ -1,33 +1,20 @@
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import React, { useState } from 'react';
 import PortableText from 'react-portable-text';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../components/headers';
 import { client, urlFor } from '../../lib/client';
-import { Post } from '../../typings';
 
-interface Props {
-  post: Post;
-}
-
-interface IFormInput {
-  _id: string;
-  name: string;
-  email: string;
-  comment: string;
-}
-
-const PostDetail = ({ post, params }: Props) => {
+const PostDetail = ({ post, params }) => {
   const [submitted, setSubmitted] = useState(false);
   console.log(params, post);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm();
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  const onSubmit = async (data) => {
     await fetch('/api/createComment', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -81,22 +68,20 @@ const PostDetail = ({ post, params }: Props) => {
               projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
               content={post.body}
               serializers={{
-                h1: (props: any) => (
+                h1: (props) => (
                   <h1
                     className="my-5 text-2xl font-bold"
                     {...props}
                   />
                 ),
-                h2: (props: any) => (
+                h2: (props) => (
                   <h2 className="my-5 text-xl font-bold" {...props} />
                 ),
-                li: ({ children }: any) => (
+                li: ({ children }) => (
                   <li className="ml-4 list-disc">{children}</li>
                 ),
-                normal: (props: any) => (
-                  <p className="my-3" {...props} />
-                ),
-                link: ({ href, children }: any) => (
+                normal: (props) => <p className="my-3" {...props} />,
+                link: ({ href, children }) => (
                   <a
                     href={href}
                     className="text-blue-500 hover:underline"
@@ -232,7 +217,7 @@ export const getStaticPaths = async () => {
       }`;
 
   const posts = await client.fetch(query);
-  const paths = posts.map((post: Post) => ({
+  const paths = posts.map((post) => ({
     params: {
       slug: post.slug.current,
     },
@@ -244,7 +229,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   const query = `*[_type == 'posts' && slug.current == $slug][0]{
         _id,
         _createdAt,

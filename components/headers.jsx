@@ -9,7 +9,7 @@ import { signIn, useSession, signOut } from 'next-auth/react';
 import logo from '../assets/logo.png';
 
 const Header = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
     <header className="mx-auto flex max-w-7xl justify-between p-5">
       <div className="flex items-center space-x-5">
