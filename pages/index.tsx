@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import Header from '../components/headers';
 import Main from '../components/main';
+import News from '../components/news';
 import Posts from '../components/posts';
+import Sidebar from '../components/sidebar';
 import { client } from '../lib/client';
 import { Post } from '../typings';
 
@@ -11,7 +13,7 @@ interface Props {
 
 export default function Home({ posts }: Props) {
   return (
-    <div className="mx-auto max-w-7xl">
+    <div>
       <Head>
         <title>Medium Demo - Typescript</title>
         <link rel="icon" href="/favicon.ico" />
@@ -19,13 +21,17 @@ export default function Home({ posts }: Props) {
 
       <Header />
       <Main />
-      <Posts posts={posts} />
+      {posts && <Posts posts={posts} />}
+      <div className="mx-auto flex max-w-7xl flex-row items-start gap-14">
+        <News />
+        <Sidebar />
+      </div>
     </div>
   );
 }
 
 export const getServerSideProps = async () => {
-  const query = `*[_type == 'post']{
+  const query = `*[_type == 'posts']{
     _id,
     title,
     slug,

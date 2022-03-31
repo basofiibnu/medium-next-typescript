@@ -4,6 +4,11 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'googleId',
+      title: 'Google ID',
+      type: 'string',
+    },
+    {
       name: 'name',
       title: 'Name',
       type: 'string',
@@ -11,19 +16,12 @@ export default {
     {
       name: 'slug',
       title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
+      type: 'string',
     },
     {
       name: 'image',
       title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
+      type: 'string',
     },
     {
       name: 'bio',
@@ -33,7 +31,7 @@ export default {
         {
           title: 'Block',
           type: 'block',
-          styles: [{title: 'Normal', value: 'normal'}],
+          styles: [{ title: 'Normal', value: 'normal' }],
           lists: [],
         },
       ],
@@ -45,4 +43,4 @@ export default {
       media: 'image',
     },
   },
-}
+};

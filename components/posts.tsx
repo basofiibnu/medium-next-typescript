@@ -5,35 +5,40 @@ import { Post } from '../typings';
 
 interface Props {
   posts: [Post];
+  borderBottom?: boolean;
 }
 
-const Posts = ({ posts }: Props) => {
+const Posts = ({ posts, borderBottom = true }: Props) => {
   return (
-    <div className="sm: grid grid-cols-1 gap-3 p-2 sm:grid-cols-2 md:gap-6 md:p-6 lg:grid-cols-3">
-      {posts.map((post) => (
-        <Link key={post._id} href={`/post/${post.slug.current}`}>
-          <div className="group cursor-pointer overflow-hidden rounded-lg border">
-            <img
-              src={urlFor(post.mainImage).url()}
-              alt="content-pic"
-              className="h-60 w-full object-cover transition-transform ease-in-out group-hover:scale-105"
-            />
-            <div className="flex justify-between bg-white p-5">
-              <div>
-                <p className="text-lg font-bold">{post.title}</p>
-                <p className="text-xs">
-                  {post.description} by {post.author.name}
-                </p>
+    <div className={`${borderBottom && 'border-b'} border-gray-300`}>
+      <div className="mx-auto max-w-7xl">
+        <div className="sm: grid grid-cols-1 gap-3 p-2 sm:grid-cols-2 md:gap-6 md:p-6 lg:grid-cols-4">
+          {posts.map((post) => (
+            <Link key={post._id} href={`/post/${post.slug.current}`}>
+              <div className="group cursor-pointer overflow-hidden rounded-lg border">
+                <img
+                  src={urlFor(post.mainImage).url()}
+                  alt="content-pic"
+                  className="h-60 w-full object-cover transition-transform ease-in-out group-hover:scale-105"
+                />
+                <div className="flex items-center justify-between bg-white p-5">
+                  <div>
+                    <p className="text-lg font-bold">{post.title}</p>
+                    <p className="text-xs">
+                      {post.description} by {post.author.name}
+                    </p>
+                  </div>
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src={post.author.image}
+                    alt="author-pic"
+                  />
+                </div>
               </div>
-              <img
-                className="h-12 w-12 rounded-full"
-                src={urlFor(post.author.image).url()!}
-                alt="author-pic"
-              />
-            </div>
-          </div>
-        </Link>
-      ))}
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

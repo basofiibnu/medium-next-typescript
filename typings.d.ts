@@ -34,3 +34,17 @@ export interface Comment {
     _type: string;
   };
 }
+
+export interface Author {
+  _id: string;
+  googleId: string;
+  image: string;
+  name: string;
+  slug: string;
+}
+
+export interface Category {
+  _id: string;
+  title: string;
+  _rev: string;
+}

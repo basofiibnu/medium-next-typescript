@@ -18,8 +18,9 @@ interface IFormInput {
   comment: string;
 }
 
-const PostDetail = ({ post }: Props) => {
+const PostDetail = ({ post, params }: Props) => {
   const [submitted, setSubmitted] = useState(false);
+  console.log(params);
   const {
     register,
     handleSubmit,
@@ -60,7 +61,7 @@ const PostDetail = ({ post }: Props) => {
 
           <div className="flex items-center space-x-2">
             <img
-              src={urlFor(post.author.image).url()}
+              src={post.author.image}
               className="h-10 w-10 rounded-full"
               alt="author-pic"
             />
@@ -223,7 +224,7 @@ const PostDetail = ({ post }: Props) => {
 export default PostDetail;
 
 export const getStaticPaths = async () => {
-  const query = `*[_type == 'post']{
+  const query = `*[_type == 'posts']{
         _id,
         slug {
           current
@@ -244,7 +245,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const query = `*[_type == 'post' && slug.current == $slug][0]{
+  const query = `*[_type == 'posts' && slug.current == $slug][0]{
         _id,
         _createdAt,
         title,
@@ -252,7 +253,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             image,
             name
         },
-        'comments': *[_type == "comment" && post._ref == ^._id && approved == true],
+        'comments': *[_type == "comment" && posts._ref == ^._id && approved == true],
         description,
         mainImage,
         slug,
@@ -271,6 +272,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
+      params,
       post,
     },
     // revalidate: 60,
